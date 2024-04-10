@@ -26,5 +26,8 @@
     <ClInclude Include="Graphics.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="geometry.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
