@@ -1,9 +1,24 @@
 #include "Graphics.h"
 #include <iostream>
 
-using namespace graphics;
-int main(int argc, char** argv) {
 
+using namespace graphics;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main(int argc, char** argv) {
+    setlocale(0, "rus");
 
 
     srand(time(0));
@@ -20,15 +35,16 @@ int main(int argc, char** argv) {
     coordinates c3(150, 100);
 
 
-    for (int i = 0; i < 100; ++i) {
-        for (int j = 0; j < 100; ++j) {
-            SetPixel(hDC, i, j, color.GetColor());
-        }
-    }
+    //for (int i = 0; i < 100; ++i) {
+    //    for (int j = 0; j < 100; ++j) {
+    //        SetPixel(hDC, i, j, color.GetColor());
+    //    }
+    //}
 
 
     color.RandomColor();
-    DrawRas_Triangle(c1, c2, c3, color);
+    //DrawRas_Triangle(c1, c2, c3, color);
+    TriangleRast(c1, c2, c3, color);
     //DrawTriangle(c1, c2, c3, color);
 
     color.RandomColor();
@@ -43,6 +59,8 @@ int main(int argc, char** argv) {
     c1.RandCoordinates();
     color.RandomColor();
     DrawCircle(c1, 70, color);
+
+    
 
     color.RandomColor();
     c1.RandCoordinates();

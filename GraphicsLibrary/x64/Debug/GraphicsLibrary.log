@@ -1,13 +1,3 @@
-﻿  Graphics.cpp
-F:\C++\My_projects\GraphicsLibrary\Graphics.cpp(231,20): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "min"
-F:\C++\My_projects\GraphicsLibrary\Graphics.cpp(232,20): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "min"
-F:\C++\My_projects\GraphicsLibrary\Graphics.cpp(233,20): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "max"
-F:\C++\My_projects\GraphicsLibrary\Graphics.cpp(234,20): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "max"
-F:\C++\My_projects\GraphicsLibrary\Graphics.cpp(262,20): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "min"
-F:\C++\My_projects\GraphicsLibrary\Graphics.cpp(263,20): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "min"
-F:\C++\My_projects\GraphicsLibrary\Graphics.cpp(264,20): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "max"
-F:\C++\My_projects\GraphicsLibrary\Graphics.cpp(265,20): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "max"
-  Main.cpp
-F:\C++\My_projects\GraphicsLibrary\Main.cpp(9,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-  Создание кода...
+﻿  Main.cpp
+F:\C++\My_projects\GraphicsLibrary\Main.cpp(24,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   GraphicsLibrary.vcxproj -> F:\C++\My_projects\GraphicsLibrary\x64\Debug\GraphicsLibrary.exe

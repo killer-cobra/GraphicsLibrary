@@ -2,8 +2,10 @@
 #include <windows.h>
 #include <ctime>
 #include <stdlib.h>
-#include <vector>
+//#include <vector>
 #include <algorithm>
+#include <cmath>
+#include "geometry.h"
 
 namespace graphics {
 
@@ -12,7 +14,14 @@ namespace graphics {
     __declspec(selectany) HWND hWnd;
     __declspec(selectany) HDC hDC;
     
+    //__declspec(selectany) long double M_PI = 3.14159;
+
+
     void DefineScreenSize(int& width, int& height);
+
+
+
+    /// /////////////////////////////////////////
 
 
     class Color {
@@ -33,7 +42,7 @@ namespace graphics {
 
         void SetColor(unsigned char color_red, unsigned char color_green, unsigned char color_blue);
 
-        const COLORREF GetColor();
+        const COLORREF GetColor() const;
 
         void RandomColor();
 
@@ -53,7 +62,8 @@ namespace graphics {
         friend void DrawLine(coordinates& c1, coordinates& c2, Color& color);
         friend void DrawCircle(coordinates coords, int radius, Color& color);
         friend void DrawTriangle(coordinates c1, coordinates c2, coordinates c3, Color& color);
-        
+        friend void TriangleRast(coordinates ñ0, coordinates ñ1, coordinates ñ2, Color& color);
+        friend void Swap_c(coordinates& c1, coordinates& c2);
     public:
         int x = 0;
         int y = 0;
@@ -67,6 +77,15 @@ namespace graphics {
 
         void operator = (const coordinates& other);
 
+        coordinates operator + (coordinates& other);
+
+
+
+        coordinates operator - (coordinates& other);
+
+        coordinates operator * (float f);
+
+
         void swap();
 
         void setcoordinates(int x, int y);
@@ -78,8 +97,10 @@ namespace graphics {
     };
 
 
+
     void swap(int &a, int &b);
 
+    void Swap_c(coordinates& c1, coordinates& c2);
 
     void DrawLine(int& x1, int& y1, int& x2, int& y2);
 
@@ -95,6 +116,6 @@ namespace graphics {
 
     void DrawRas_Triangle(coordinates c1, coordinates c2, coordinates c3, Color& color);
 
-
+    void TriangleRast (coordinates c1, coordinates c2, coordinates c3, Color& color);
 }
 

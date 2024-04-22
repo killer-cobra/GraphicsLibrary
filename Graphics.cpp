@@ -14,6 +14,8 @@ void graphics::DefineScreenSize(int& width, int& height) {
 }
 
 
+///////////////////////////////////////////////////////
+
 
 
 //----------------------------------------------------------------
@@ -34,10 +36,31 @@ void graphics::DefineScreenSize(int& width, int& height) {
         this->y = other.y;
     }
 
+    graphics::coordinates graphics::coordinates::operator - (coordinates& other) {
+        return coordinates(x - other.x, y - other.y);
+    }
+
+    graphics::coordinates graphics::coordinates::operator + (coordinates& other) {
+
+        return coordinates(x + other.x, y + other.y);
+    }
+
+    graphics::coordinates graphics::coordinates::operator * (float f) {
+        return coordinates(x * f, y * f);
+    }
+
+
+
+
+
+
+
+
     void graphics::coordinates::swap() {
         int temp = x;
         x = y;
         y = temp;
+
     }
 
 
@@ -84,7 +107,7 @@ void graphics::DefineScreenSize(int& width, int& height) {
         this->color_blue = color_blue;
     }
 
-    const COLORREF graphics::Color::GetColor() {
+    const COLORREF graphics::Color::GetColor()const {
         return RGB(color_red, color_green, color_blue);
     }
 
@@ -100,12 +123,23 @@ void graphics::DefineScreenSize(int& width, int& height) {
 	//----------------------------------------------------------------
 
 
+
+
+
     void graphics::swap(int &a, int &b) {
         int temp = a;
         a = b;
         b = temp;
     }
 
+
+    void graphics::Swap_c(coordinates& c1, coordinates& c2) {
+        coordinates temp(c1.x, c1.y);
+        c1.x = c2.x;
+        c1.y = c2.y;
+        c2.x = temp.x;
+        c2.y = temp.y;
+    }
 
 
     void graphics::DrawLine(int &x1, int &y1, int &x2, int &y2) {
@@ -254,6 +288,9 @@ void graphics::DefineScreenSize(int& width, int& height) {
 
 
     void graphics::DrawRas_Triangle(coordinates c1, coordinates c2, coordinates c3, Color& color) {
+
+
+
         auto edgeFunction = [](int x0, int y0, int x1, int y1, int x2, int y2) {
             return (y2 - y0) * (x1 - x0) - (x2 - x0) * (y1 - y0);
             };
@@ -280,5 +317,63 @@ void graphics::DefineScreenSize(int& width, int& height) {
         }
     }
 
+
+
+    //void graphics::triangle21(coordinates c1, coordinates c2, coordinates c3, Color& color) {
+    //    if (c1.y == c2.y && c1.y == c3.y) return; // i dont care about degenerate triangles
+    //    // sort the vertices, t0, t1, t2 lower-to-upper (bubblesort yay!)
+    //    if (c1.y > c2.y) Swap_c(c1, c2);
+    //    if (c1.y > c3.y) Swap_c(c1, c3);
+    //    if (c2.y > c3.y) Swap_c(c2, c3);
+    //    int total_height = c3.y - c1.y;
+    //    for (int i = 0; i < total_height; i++) {
+    //        bool second_half = i > c2.y - c1.y || c2.y == c1.y;
+    //        int segment_height = second_half ? c3.y - c2.y : c2.y - c1.y;
+    //        float alpha = (float)i / total_height;
+    //        float beta = (float)(i - (second_half ? c2.y - c1.y : 0)) / segment_height; // be careful: with above conditions no division by zero here
+    //        coordinates Aa = c2 - c1;
+    //        coordinates Aaa = Aa * alpha;
+    //        coordinates A = c1 + Aaa;
+    //        coordinates Bb = (c3 - c2) * beta
+
+    //            coordinates B = second_half ? c2 + coordinates((c3 - c2) * beta) : c1 + coordinates((c2 - c1) * beta);
+    //        if (A.x > B.x) Swap_c(A, B);
+    //        for (int j = A.x; j <= B.x; j++) {
+    //            SetPixel(hDC, j, c1.y + i, color.GetColor()); // attention, due to int casts t0.y+i != A.y
+    //        }
+    //    }
+    //}
+
+
+
+    void graphics::TriangleRast (coordinates c1, coordinates c2, coordinates c3, Color &color) {
+        if (c1.y == c2.y && c1.y == c3.y) return;
+        // sort the vertices, c1, c2 lower-to-upper (bubblesort yay!)
+        if (c1.y > c2.y) Swap_c(c1, c2);
+        if (c1.y > c3.y) Swap_c(c1, c3);
+        if (c2.y > c3.y) Swap_c(c2, c3);
+        int total_height = c3.y - c1.y;
+        for (int i = 0; i < total_height; i++) {
+            bool second_half = i > c2.y - c1.y || c2.y == c1.y;
+            int segment_height = second_half ? c3.y - c2.y : c2.y - c1.y;
+            float alpha = (float)i / total_height;
+            float beta = (float)(i - (second_half ? c2.y - c1.y : 0)) / segment_height;
+            coordinates Aa = c3 - c1;
+            coordinates Aaa = Aa * alpha;
+            coordinates A = c1 + Aaa;
+            coordinates Bb = (c3 - c2)  * beta;
+            coordinates Bbb = Bb + c2;
+
+            coordinates Cc = (c2 - c1) * beta;
+            coordinates Ccc = c1 + Cc;
+
+            coordinates B = second_half ? Bbb: Ccc;
+
+            if (A.x > B.x) Swap_c(A, B);
+            for (int j = A.x; j <= B.x; j++) {
+                SetPixel(hDC,j, c1.y + i, color.GetColor()); // attention, due to int casts t0.y+i != A.y
+            }
+        }
+    }
 
 
