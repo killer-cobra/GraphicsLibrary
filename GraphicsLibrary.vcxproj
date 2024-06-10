@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="obj_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="geometry.h" />

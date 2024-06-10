@@ -64,6 +64,8 @@ namespace graphics {
         friend void DrawTriangle(coordinates c1, coordinates c2, coordinates c3, Color& color);
         friend void TriangleRast(coordinates ñ0, coordinates ñ1, coordinates ñ2, Color& color);
         friend void Swap_c(coordinates& c1, coordinates& c2);
+
+
     public:
         int x = 0;
         int y = 0;
@@ -83,8 +85,9 @@ namespace graphics {
 
         coordinates operator - (coordinates& other);
 
-        coordinates operator * (float f);
+        coordinates operator * (double f);
 
+        //double* Getcoordinates() const;
 
         void swap();
 

@@ -1,6 +1,6 @@
 #include "Graphics.h"
 #include <iostream>
-
+//#include "obj_loader.cpp"
 
 using namespace graphics;
 
@@ -13,12 +13,10 @@ using namespace graphics;
 
 
 
-
-
-
-
 int main(int argc, char** argv) {
-    setlocale(0, "rus");
+    //setlocale(0, "rus");
+
+    start:
 
 
     srand(time(0));
@@ -60,6 +58,8 @@ int main(int argc, char** argv) {
     color.RandomColor();
     DrawCircle(c1, 70, color);
 
+    
+
     color.RandomColor();
     c1.RandCoordinates();
     c2.RandCoordinates();
@@ -68,9 +68,13 @@ int main(int argc, char** argv) {
 
 
 
+
+
+
     char a = 0;
     std::cin >> a;
-    //system("cls");
+    system("cls");
+
 
     return 0;
 }

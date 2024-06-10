@@ -45,13 +45,14 @@ void graphics::DefineScreenSize(int& width, int& height) {
         return coordinates(x + other.x, y + other.y);
     }
 
-    graphics::coordinates graphics::coordinates::operator * (float f) {
+    graphics::coordinates graphics::coordinates::operator * (double f) {
         return coordinates(x * f, y * f);
     }
 
-
-
-
+    //double* graphics::coordinates::Getcoordinates() const {
+    //    double coords[2] = { this->x, this->y };
+    //    return coords;
+    //}
 
 
 
@@ -347,8 +348,8 @@ void graphics::DefineScreenSize(int& width, int& height) {
 
 
     void graphics::TriangleRast (coordinates c1, coordinates c2, coordinates c3, Color &color) {
-        if (c1.y == c2.y && c1.y == c3.y) return; // i dont care about degenerate triangles
-        // sort the vertices, t0, t1, t2 lower-to-upper (bubblesort yay!)
+        if (c1.y == c2.y && c1.y == c3.y) return;
+        // sort the vertices, c1, c2 lower-to-upper (bubblesort yay!)
         if (c1.y > c2.y) Swap_c(c1, c2);
         if (c1.y > c3.y) Swap_c(c1, c3);
         if (c2.y > c3.y) Swap_c(c2, c3);
@@ -357,14 +358,18 @@ void graphics::DefineScreenSize(int& width, int& height) {
             bool second_half = i > c2.y - c1.y || c2.y == c1.y;
             int segment_height = second_half ? c3.y - c2.y : c2.y - c1.y;
             float alpha = (float)i / total_height;
-            float beta = (float)(i - (second_half ? c2.y - c1.y : 0)) / segment_height; // be careful: with above conditions no division by zero here
-            coordinates Aa = c2 - c1;
+            float beta = (float)(i - (second_half ? c2.y - c1.y : 0)) / segment_height;
+            coordinates Aa = c3 - c1;
             coordinates Aaa = Aa * alpha;
             coordinates A = c1 + Aaa;
             coordinates Bb = (c3 - c2)  * beta;
-            coordinates Bbb = (c2 - c1) * beta;
+            coordinates Bbb = Bb + c2;
 
-            coordinates B = second_half ? c2 + Bb: c1 + Bbb;
+            coordinates Cc = (c2 - c1) * beta;
+            coordinates Ccc = c1 + Cc;
+
+            coordinates B = second_half ? Bbb: Ccc;
+
             if (A.x > B.x) Swap_c(A, B);
             for (int j = A.x; j <= B.x; j++) {
                 SetPixel(hDC,j, c1.y + i, color.GetColor()); // attention, due to int casts t0.y+i != A.y
